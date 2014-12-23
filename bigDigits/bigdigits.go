@@ -36,6 +36,7 @@ func main() {
 	// So to check if there any args we can check if length is 1
 	if len(os.Args) == 1 {
 		fmt.Printf("usage: %s: <whole-number>\n", filepath.Base(os.Args[0]))
+		os.Exit(1)
 	}
 
 	// Store first argument that the user enters as a string
@@ -44,7 +45,11 @@ func main() {
 	for row := range bigDigits[0] {
 		line := ""
 		for column := range stringOfDigits {
+			// When indexing a position of a string we get the utf8 value of it
+			// convert the utf value into the byte value
+			// e.g. 3 = utf-8(codepoint51) 0 = utf-8(codepoint 48) so 51 - 48 = 3
 			digit := stringOfDigits[column] - '0'
+			// check if digit is in the provided range
 			if 0 <= digit && digit <= 2 {
 				line += bigDigits[digit][row] + " "
 			} else {
